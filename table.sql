@@ -39,10 +39,8 @@ insert into store_products (product_id, description, price, units_sold, store_id
 insert into store_products (product_id, description, price, units_sold, store_id) values('C','Refreshing Mask', 15.0,0,1);
 insert into store_products (product_id, description, price, units_sold, store_id) values('D','Facial Cleanser', 90.0, 0, 1);
 
-insert into store_products (product_id, description, price, units_sold, store_id) values('E','Coffee Mugs', 35.0, 0, 2);
-insert into store_products (product_id, description, price, units_sold, store_id) values('F','Coffee Beans', 45.0, 0, 2);
-insert into store_products (product_id, description, price, units_sold, store_id) values('G','Coffee Beer', 65.0, 0, 2);
-insert into store_products (product_id, description, price, units_sold, store_id) values('H','Brewed Coffee', 10.0, 0, 2);
+
+
 
 UPDATE store_products 
 ('H','Coffee cups', 15.0, 0, 2);
