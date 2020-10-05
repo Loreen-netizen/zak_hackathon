@@ -23,7 +23,7 @@ o store_products (description) values('refreshing mask');
 INSERT INTO Customers (CustomerName, ContactName, Address, City, PostalCode, Country)
 VALUES ('Cardinal', 'Tom B. Erichsen', 'Skagen 21', 'Stavanger', '4006', 'Norway');
 
-insert into store_products (product_id, description, price, units_sold, store_id) values('A','facial cream', 10.0,1);
+insert into store_products (product_id, description, price, units_sold, store_id) values('A','facial cream', 10.0,0,1);
 
 
 INSERT INTO Customers (CustomerName, ContactName, Address, City, PostalCode, Country)

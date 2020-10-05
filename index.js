@@ -23,26 +23,26 @@ app.use(session({
 app.use(flash());
 
 
-app.get('/addFlash', function (req, res) {
+app.get('/addFlash', function(req, res) {
     req.flash('info', 'Flash Message Added');
     res.redirect('/');
 });
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
-// parse application/json
+    // parse application/json
 app.use(bodyParser.json())
 
 app.use(express.static('public'));
 
-app.get("/login", function (req, res) {
-    req.session.regenerate(function () {
+app.get("/login", function(req, res) {
+    req.session.regenerate(function() {
         res.redirect("/");
     });
 })
 
 
-app.get('/', async function (req, res) {
+app.get('/', async function(req, res) {
     let userMessage = req.body.myreview;
     // console.log(userMessage);
 
@@ -54,32 +54,32 @@ app.get('/', async function (req, res) {
 
     res.render('index', {
         updateCart: products
-        // storeName: await zak.productStore()
+            // storeName: await zak.productStore()
     });
 
 
 });
 
-app.get('/viewcart', async function (req, res) {
+app.get('/viewcart', async function(req, res) {
     res.render('viewcart', {
         cart: await req.session.cart || {}
     })
 })
 
-app.get('/dashboard_store', async function (req, res) {
-    
+app.get('/dashboard_store', async function(req, res) {
+
     const data = {
         msg: zak.getMsg(),
-        rows: await zak.getDashboardData()    
+        rows: await zak.getDashboardData()
     };
 
     console.log(data)
-    
+
     res.render('dashboard_store', data)
 });
 
-app.get('/dashboard_store/:id', async function (req, res) {
-    
+app.get('/dashboard_store/:id', async function(req, res) {
+
     const rows = await zak.getDashboardDataByStore(req.params.id);
 
     const store_name = rows[0].store_name;
@@ -87,13 +87,13 @@ app.get('/dashboard_store/:id', async function (req, res) {
     const data = {
         msg: zak.getMsg(),
         rows,
-        store_name   
+        store_name
     };
-    
+
     res.render('dashboard_store', data)
 });
 
-app.post('/reviews', function (req, res) {
+app.post('/reviews', function(req, res) {
     let userMessage = req.body.myreview;
     if (userMessage) {
         req.flash('info', 'Review sent!');
@@ -118,12 +118,12 @@ async function addToCart(currentCart, productId) {
 
     let product = await zak.getProductById(productId);
     cart.items.push(product)
-    cart.total += parseFloat (product.price);
+    cart.total += parseFloat(product.price);
 
     return cart;
 }
 
-app.post('/cart',async function (req, res) {
+app.post('/cart', async function(req, res) {
 
     req.session.cart = await addToCart(req.session.cart, req.body.productId);
 
@@ -132,7 +132,7 @@ app.post('/cart',async function (req, res) {
 
 function clearCart(req) {
 
-    if ( req.session.cart) {
+    if (req.session.cart) {
         req.session.cart = {
             items: [],
             total: 0
@@ -142,8 +142,8 @@ function clearCart(req) {
 }
 
 
-app.post('/clearcart', async function (req, res) {
-    
+app.post('/clearcart', async function(req, res) {
+
     clearCart(req);
 
     res.render('viewcart', {
@@ -151,26 +151,26 @@ app.post('/clearcart', async function (req, res) {
     })
 })
 
-app.post('/checkout', async function (req, res) {
+app.post('/checkout', async function(req, res) {
     // let productName = req.session.cart.items;  
     // console.log(productName) ;
     let checkout = await zak.storeInDb(req.session.cart);
-    
+
     clearCart(req);
 
     res.redirect('/')
-    // return checkout;
+        // return checkout;
 })
 
-app.get('/removeItem/:productId', async function (req, res) {
+app.get('/removeItem/:productId', async function(req, res) {
 
     // let itemsArray = req.session.cart.items.push(product)
 
     const productId = req.params.productId;
 
-    const product =await  zak.getProductById(productId);
+    const product = await zak.getProductById(productId);
 
-    req.session.cart.items = await req.session.cart.items.filter(function (item) {
+    req.session.cart.items = await req.session.cart.items.filter(function(item) {
         return item.id != productId
     });
 
@@ -182,7 +182,7 @@ app.get('/removeItem/:productId', async function (req, res) {
 });
 
 
-const PORT = process.env.PORT || 3001;
-app.listen(PORT, function () {
+const PORT = process.env.PORT || 3002;
+app.listen(PORT, function() {
     console.log("App started at port:", PORT)
 });
